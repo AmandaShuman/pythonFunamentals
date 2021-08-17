@@ -10,3 +10,4 @@ This is where I am working through my coding class and builing basic fundamental
 5. Converting inputs
 6. if/elif/else 
 7. Recursion - Fibonacci sequence
+8. Reverse notation [::-1]
