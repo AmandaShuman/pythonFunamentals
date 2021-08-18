@@ -1,3 +1,5 @@
+import sys
+
 while True:
     #declare variables
     wizard = "Wizard"
@@ -58,7 +60,7 @@ while True:
         my_damage = centaur_damage
         break
     if (player == "6"):
-        exit("Ok, goodbye!")
+        sys.exit("Ok, goodbye!")
     else:
         print("Unknown character")
 
