@@ -29,7 +29,6 @@ def reset_game():
 
 def dice_game(): 
     while True:
-        global high_score
         print("Current High Score:", high_score)
         print("1) Roll Dice \n2) Leave Game")
         choice = input("Enter your choice: ")
