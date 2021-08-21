@@ -1,8 +1,14 @@
-from banking_pkg import account
+from banking_pkg import account, validation
 
-def atm_menu(name):
-    print("")
-    print("          === Automated Teller Machine ===          ")
+# -------------------------------------------------------------
+# Create an ATM application that imports from a banking package
+# -------------------------------------------------------------
+
+
+def atm_menu(name="", body=False):
+  print("")
+  print("          === Automated Teller Machine ===          ")
+  if body:
     print("User: " + name)
     print("------------------------------------------")
     print("| 1.    Balance     | 2.    Deposit      |")
@@ -12,42 +18,39 @@ def atm_menu(name):
     print("------------------------------------------")
 
 
-print("          === Automated Teller Machine ===          ")
-user = input("Enter name to register: ")
-account.name_validation(user)
-pin = input("Enter PIN: ")
-account.pin_validation(pin)
+atm_menu()
+# Acquire a name and pin in order to register customer
+user = validation.get_valid_name()
+pin = validation.get_valid_pin()
 balance = 0
-print(f"{user.capitalize()} has been registered with a starting balance of ${balance:.2f}")
+print(f"{user} has been registered with a starting balance of ${balance}")
 
 while True:
-    print("          === Automated Teller Machine ===          ")
-    print("LOGIN")
-    user_to_validate = input("Enter name: ")
-    pin_to_validate = input("Enter PIN: ")
-    if user.lower() == user_to_validate.lower() and pin == pin_to_validate:
-        print("Login successful!")
-        break
-    else: 
-        print("Invalid credentials. Try again.")
+  atm_menu()
+  print("LOGIN")
+  # Acquire name and pin in order to validate to allow login
+  name_to_validate = input("Enter name: ").capitalize()
+  pin_to_validate = input("Enter PIN: ")
+  if user == name_to_validate and pin == pin_to_validate:
+    print("Login successful!\n")
+    break
+  else:
+    print("Invalid credentials!, stop it\n")
 
+# Options Menu Loop
 while True:
-    atm_menu(user)
-    option = input("Choose an option: ")
-    if option == "1":
-        account.show_balance(balance)
-    elif option == "2":
-        balance = account.deposit(balance)
-        account.show_balance(balance)
-    elif option == "3":
-        if balance == 0:
-            print("You do not have any money in your account to make a withdrawal.")
-            continue
-        else:
-            balance = account.withdraw(balance)
-            account.show_balance(balance)
-    elif option == "4": 
-        account.logout(user)
-        break
-    else:
-        print("Invalid option. Please try again.")
+  atm_menu(user, body=True)
+  option = input("Choose an option: ")
+  if option == "1":
+    account.show_balance(balance)
+  elif option == "2":
+    balance = account.deposit(balance)
+    account.show_balance(balance)
+  elif option == "3":
+    balance = account.withdraw(balance)
+    account.show_balance(balance)
+  elif option == "4":
+    account.logout(user)
+    break
+  else:
+    print("Does not compute, Please input valid inputs\n")

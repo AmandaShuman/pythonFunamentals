@@ -1,38 +1,28 @@
 def show_balance(balance):
     print(f"Current Balance: ${balance:.2f}")
 
+
 def deposit(balance):
-    amount = input("Enter amount to deposit: ")
-    return float(amount) + balance
+  while True:
+    amount = input("What do you wanna give me?: ")
+    if float(amount) == False:
+      print("\nPlease enter a numeric value and enjoy our rare courtesy\n")
+    else:
+      return float(amount) + balance
+
 
 def withdraw(balance):
     while True:
-        amount = input("Enter amount to withdraw: ")
-        if float(amount) <= balance:
-            return balance - float(amount)
-        else: 
-            print("Insufficient funds for withdrawal request. Please request a different amount.")
-            show_balance(balance)
-            continue
+      money = input("Enter amount to withdraw?: ")
+      if money.isnumeric() == False:
+        print("\nPlease enter a whole number value.\n")
+      elif balance - float(money) < 0:
+        print("\nYou popper! Please proceed to the loan officer, you don't have that kind of money bro!\n")
+      else:
+        return balance - float(money)
+
 
 def logout(name):
-    print("Goodbye", name +"!")
-
-def name_validation(user):
-    while True:
-        if len(user) == 0:
-            print("You must enter a name")
-            user = input("Enter name to register: ")
-        elif len(user) >10:
-            print("The maximum length is 10 characters")
-            user = input("Enter name to register: ")
-        else:
-            break
-
-def pin_validation(pin):
-    while True:
-        if len(pin) != 4:
-            print("PIN must contain 4 numbers")
-            pin = input("Enter PIN: ")
-        else:
-            break
+    print(
+        f"Get OUT {name}! And don't come back Jack! Best from your friendly neighborhood bank: YEET of America, YOA LLC"
+    )
