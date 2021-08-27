@@ -15,4 +15,3 @@ while diamonds:
         print("Remaining cards", diamonds)
         if not diamonds:
            print("There are no mare cards to pick.")
-           break 
