@@ -1,6 +1,3 @@
-from donations_pkg import user
-
-
 def show_homepage():
     print("")
     print("          === DonateMe Homepage ===          ")

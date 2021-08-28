@@ -20,9 +20,6 @@ def register(database, username, password):
         if 0 < len(username) <= 10 and len(password) >= 5 and re.match("^[a-z]*$", username):
             print("Username", username, "registered!")
             return username
-        elif re.match("[a-z0-9]", username):
-            print("Username can only contain letters.")
-            return ""
         elif len(username) == 0 or len(username) > 10:
             print("Username must be between 1 and 10 characters long.")
             return ""
@@ -30,5 +27,5 @@ def register(database, username, password):
             print("Password must be at least 5 characters long.")
             return ""
         else:
-            print("Unknown error. Please try again.")
+            print("Username can only contain letters.")
             return ""

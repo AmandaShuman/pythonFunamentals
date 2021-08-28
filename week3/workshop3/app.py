@@ -16,17 +16,15 @@ while True:
 
     if option == "1":
         print()
-        username = input("Enter username: ")
+        username = input("Enter username: ").lower()
         password = input("Enter password: ")
         print()
-        username = username.lower()
         authorized_user = login(database, username, password)
     elif option == "2":
         print()
-        username = input("Enter username: ")
+        username = input("Enter username: ").lower()
         password = input("Enter password: ")
         print()
-        username = username.lower()
         authorized_user = register(database, username, password)
         if authorized_user != "":
             database[username] = password
