@@ -23,10 +23,6 @@ class IceCreamShop:
         self.orders = Queue()
 
     def take_order(self, customer, flavor, scoops):
-        self.customer = customer
-        self.flavor = flavor
-        self.scoops = scoops
-
         if flavor in self.flavors and 1 <= scoops <= 3:
             print("Order created!")
             order = {"customer": customer, "flavor": flavor, "scoops": scoops}
