@@ -4,18 +4,37 @@ class User:
         self.pin = pin
         self.password = password
 
-    def spaces_or_equal_check(self, item):
+    def spaces_check(self, item):
         if ' ' in item:
             print("Cannot contain empty spaces. Change cancelled.")
             return False
-        if self.name == item or self.pin == item or self.password == item:
-            print("This is the same as before. Pick a new one!")
+        else:
+            return True
+
+    def equal_name_check(self, name):
+        if self.name == name:
+            print("You cannot use a name you have already used. Please try again.")
+            return False
+        else:
+            return True
+
+    def equal_pin_check(self, pin):
+        if self.pin == int(pin): 
+            print("You cannot use a PIN you have already used. Please try again.")
+            return False
+        else:
+            return True
+
+    def equal_password_check(self, password):
+        if self.password == password:
+            print("You cannot use a previously used password. Please try again.")
+            return False
         else:
             return True
 
     def change_name(self, name):
         name = name.strip()  # remove beginning/end spaces
-        if self.spaces_or_equal_check(name):        
+        if self.spaces_check(name) and self.equal_name_check(name):        
             if 2 <= len(name) <= 10:
                 self.name = name
                 return self.name
@@ -24,15 +43,15 @@ class User:
 
     def change_pin(self, pin):
         pin = pin.strip()
-        if self.spaces_or_equal_check(pin):
+        if self.spaces_check(pin) and self.equal_pin_check(pin):
             if len(pin) == 4 and type(pin) is int:
-                self.pin = pin
+                self.pin = int(pin)
                 return self.pin
             else:
-                print("PINs must be 4 numbers.")
+                print("PINs must be 4 digits long.")
 
     def change_password(self, password):
-        if self.spaces_or_equal_check(password):
+        if self.spaces_check(password) and self.equal_password_check(password):
             if len(password) >= 5:
                 self.password = password
                 return self.password
@@ -103,33 +122,33 @@ class BankUser(User):
             self.balance += amt
             return self.balance
 
-    def transfer_money(self, user, amt):
+    def transfer_money(self, recipient, amt):
         if self.value_check(amt) and self.check_on_hold():  # first check if valid input and on hold or not
-            print("\nYou are transferring $" + str(amt), "to", user.name)
+            print("\nYou are transferring $" + str(amt), "to", recipient.name)
             print("Authentication required")
             pin_check = input("Enter your PIN: ")
             if self.password_check(pin_check):  # check if pw match
                 print("Transfer authorized")
-                print(f"Transferring ${amt:.2f} to {user.name}")
-                if self.enough_money_check(amt) and user.check_on_hold():  # check if enough money and user on hold
+                if self.enough_money_check(amt) and recipient.check_on_hold():  # check if enough money and user on hold
+                    print(f"Transferring ${amt:.2f} to {recipient.name}")
                     self.withdraw(amt)
-                    user.deposit(amt)
+                    recipient.deposit(amt)
                     return True
                 else:
                     return False
 
-    def request_money(self, user, amt):
+    def request_money(self, donor, amt):
         if self.value_check(amt) and self.check_on_hold():
-            print(f"\nYou are requesting ${amt:.2f} from {user.name}")
+            print(f"\nYou are requesting ${amt:.2f} from {donor.name}")
             print("User authentication is required...")
-            pin_check = input(f"Enter {user.name}'s PIN: ")
-            if user.password_check(pin_check):
+            pin_check = input(f"Enter {donor.name}'s PIN: ")
+            if donor.password_check(pin_check):
                 pw_check = input("Enter your password: ")
                 if pw_check == self.password:
                     print("Request authorized")
-                    print(f"{user.name} sent ${amt:.2f}")
-                    if user.enough_money_check(amt) and user.check_on_hold():
-                        user.withdraw(amt)
+                    if donor.enough_money_check(amt) and donor.check_on_hold():
+                        print(f"{donor.name} sent ${amt:.2f}")
+                        donor.withdraw(amt)
                         self.deposit(amt)
                         return True
                 else:
